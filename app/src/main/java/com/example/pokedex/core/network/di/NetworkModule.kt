@@ -1,5 +1,6 @@
 package com.example.pokedex.core.network.di
 
+import com.example.pokedex.BuildConfig
 import com.example.pokedex.core.network.PokemonNetworkDataSource
 import com.example.pokedex.core.network.api.RetrofitPokemonNetworkApi
 import com.example.pokedex.core.network.retrofit.RetrofitNetwork
