@@ -18,14 +18,14 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
-private const val POKE_HOST = "https://pokeapi.co/api/v2"
+private const val POKE_HOST = "https://pokeapi.co/api/v2/"
 
 @Module
 @InstallIn(SingletonComponent::class)
 interface NetworkModule {
 
     @Binds
-    fun bindsNiaNetwork(
+    fun bindsPokemonNetwork(
         pokeNetwork: RetrofitNetwork
     ): PokemonNetworkDataSource
 
