@@ -11,7 +11,7 @@ class RetrofitNetwork @Inject constructor(
 ) : PokemonNetworkDataSource {
 
     override suspend fun getPokemonList(
-        offset: Int?, limit: Int?
+        offset: Int, limit: Int
     ) = retrofitPokemonApi.getPokemonList(offset, limit)
 
     override suspend fun getPokemonListMore(nextUrl : String) = retrofitPokemonApi.getPokemonListMore(nextUrl)

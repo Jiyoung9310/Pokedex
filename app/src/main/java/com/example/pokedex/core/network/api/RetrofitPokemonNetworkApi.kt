@@ -9,8 +9,8 @@ import retrofit2.http.Url
 interface RetrofitPokemonNetworkApi {
     @GET("pokemon")
     suspend fun getPokemonList(
-        @Query("offset") offset: Int? = null,
-        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int = 0,
+        @Query("limit") limit: Int = 20,
     ): NetworkPokemonListResponse
 
     @GET
