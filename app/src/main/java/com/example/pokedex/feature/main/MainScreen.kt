@@ -1,22 +1,53 @@
 package com.example.pokedex.feature.main
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.example.pokedex.core.data.model.PokemonName
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 
 @Composable
-fun MainScreen(pokemonList: List<PokemonName>) {
+fun MainScreen(viewModel: MainViewModel) {
 
-    LazyColumn {
-        items(
-            items = pokemonList,
-            key = { it.name },
-            itemContent = { item ->
-                Text(item.name)
+    val feedState by viewModel.feedState.collectAsState()
+
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background,
+    ) {
+        when (feedState) {
+            PokemonNameUiState.Loading -> {
+                FeedLoading()
             }
-        )
+            is PokemonNameUiState.Success -> {
+                PokemonFeed(feedState as PokemonNameUiState.Success)
+            }
+        }
+
     }
 
+}
+
+@Composable
+fun FeedLoading(
+    modifier: Modifier = Modifier
+) {
+    CircularProgressIndicator()
+}
+
+@Composable
+fun PokemonFeed(
+    feedState: PokemonNameUiState.Success,
+) {
+    LazyColumn {
+        items(feedState.feed) { item ->
+            Text(item.name)
+        }
+    }
 }
