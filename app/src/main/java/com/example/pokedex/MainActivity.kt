@@ -26,13 +26,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private val fakelist = listOf(
-    PokemonName("이상해씨"),
-    PokemonName("파이리"),
-    PokemonName("꼬부기"),
-    PokemonName("피카츄"),
-)
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {

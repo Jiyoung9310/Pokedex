@@ -1,6 +1,7 @@
 package com.example.pokedex.feature.main
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -60,7 +61,7 @@ fun PokemonFeed(
     val listState = rememberLazyListState()
 
     LazyColumn(state = listState) {
-        items(feedState.feed, key = { it.name }) { item ->
+        items(feedState.feed, key = { it.id }) { item ->
             Card (
                 modifier = Modifier
                     .fillMaxSize()
@@ -70,7 +71,7 @@ fun PokemonFeed(
             )
             {
                 Box(modifier = Modifier.padding(20.dp)) {
-                    Text(item.name)
+                    Text("${item.id}. ${item.name}")
                 }
 
             }

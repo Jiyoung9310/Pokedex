@@ -1,5 +1,6 @@
 package com.example.pokedex.feature.main
 
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokedex.core.data.model.PokemonName
@@ -54,11 +55,20 @@ class MainViewModel @Inject constructor(
 
             PokemonNameUiState.Success(
                 feedFullList + pokemonData.results.map {
-                    PokemonName(it.name)
+                    PokemonName(it.url.toPokemonId(), it.name)
                 }
             )
         }.onEach {
             feedFullList.clear()
             feedFullList.addAll(it.feed)
         }
+
+    private fun String.toPokemonId() : Int {
+        return try {
+            val lastPath = this.toUri().lastPathSegment
+            lastPath?.toIntOrNull() ?: 0
+        } catch(e: Exception) {
+            0
+        }
+    }
 }
