@@ -1,9 +1,6 @@
 package com.example.pokedex.feature.main
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -16,7 +13,16 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.pokedex.R
 import com.example.pokedex.ui.theme.Pink80
 import kotlinx.coroutines.flow.distinctUntilChanged
 
@@ -70,8 +76,25 @@ fun PokemonFeed(
                 backgroundColor = Pink80
             )
             {
-                Box(modifier = Modifier.padding(20.dp)) {
-                    Text("${item.id}. ${item.name}")
+                Row(modifier = Modifier.padding(20.dp)) {
+                    Text(
+                        modifier = Modifier,
+                        text = "No${item.id}. ${item.name}",
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 20.sp,
+                        )
+                    )
+                    AsyncImage(
+                        modifier = Modifier.height(150.dp).width(150.dp),
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(item.imageUrl)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        placeholder = painterResource(R.drawable.pokemon_monster_ball),
+                    )
                 }
 
             }
