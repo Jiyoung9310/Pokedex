@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.pokedex.core.data.model.PokemonName
 import com.example.pokedex.feature.main.MainScreen
 import com.example.pokedex.feature.main.MainViewModel
 import com.example.pokedex.ui.theme.PokedexTheme

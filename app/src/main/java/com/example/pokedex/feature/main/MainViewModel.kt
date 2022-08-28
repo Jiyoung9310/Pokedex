@@ -3,7 +3,7 @@ package com.example.pokedex.feature.main
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pokedex.core.data.model.PokemonName
+import com.example.pokedex.core.data.model.PokemonInfo
 import com.example.pokedex.core.data.repository.MainRepository
 import com.example.pokedex.core.network.model.NetworkPokemonListResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
 
     private var nextUrl : String? = null
-    private val feedFullList = mutableListOf<PokemonName>()
+    private val feedFullList = mutableListOf<PokemonInfo>()
 
     private val _feedState: MutableStateFlow<PokemonNameUiState> = MutableStateFlow(PokemonNameUiState.Loading)
     val feedState : StateFlow<PokemonNameUiState> = _feedState
@@ -49,13 +49,17 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun onClickItem() {
+
+    }
+
     private fun Flow<NetworkPokemonListResponse>.mapToFeedState(): Flow<PokemonNameUiState> =
         map { pokemonData ->
             nextUrl = pokemonData.next
 
             PokemonNameUiState.Success(
                 feedFullList + pokemonData.results.map {
-                    PokemonName(it.url.toPokemonId(), it.name)
+                    PokemonInfo(it.url.toPokemonId(), it.name)
                 }
             )
         }.onEach {

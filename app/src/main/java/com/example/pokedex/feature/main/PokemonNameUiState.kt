@@ -1,6 +1,6 @@
 package com.example.pokedex.feature.main
 
-import com.example.pokedex.core.data.model.PokemonName
+import com.example.pokedex.core.data.model.PokemonInfo
 
 sealed interface PokemonNameUiState {
     object Loading : PokemonNameUiState
@@ -8,6 +8,6 @@ sealed interface PokemonNameUiState {
         /**
          * The list of news resources contained in this feed.
          */
-        val feed: List<PokemonName>
+        val feed: List<PokemonInfo>
     ) : PokemonNameUiState
 }
