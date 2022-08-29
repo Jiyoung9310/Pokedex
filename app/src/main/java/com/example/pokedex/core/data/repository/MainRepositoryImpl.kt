@@ -10,11 +10,7 @@ import javax.inject.Inject
 class MainRepositoryImpl @Inject constructor(
     private val pokemonNetworkDataSource: PokemonNetworkDataSource
 ) : MainRepository {
-    override fun getPokemonNames(): Flow<NetworkPokemonListResponse> = flow {
-        emit(pokemonNetworkDataSource.getPokemonList(0, 20))
-    }
-
-    override fun getPokemonNamesMore(url: String): Flow<NetworkPokemonListResponse> = flow {
-        emit(pokemonNetworkDataSource.getPokemonListMore(url))
+    override fun getPokemonNames(offset: Int): Flow<NetworkPokemonListResponse> = flow {
+        emit(pokemonNetworkDataSource.getPokemonList(offset, 20))
     }
 }

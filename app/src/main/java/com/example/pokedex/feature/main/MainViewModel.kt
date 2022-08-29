@@ -17,18 +17,19 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
 
     private var nextUrl : String? = null
+    private var offset: Int = 0
     private val feedFullList = mutableListOf<PokemonInfo>()
 
     private val _feedState: MutableStateFlow<PokemonNameUiState> = MutableStateFlow(PokemonNameUiState.Loading)
     val feedState : StateFlow<PokemonNameUiState> = _feedState
 
     init {
-        getPokemonList()
+        getNextPagePokemonList()
     }
 
-    private fun getPokemonList() {
+    private fun getNextPagePokemonList() {
         viewModelScope.launch {
-            mainRepository.getPokemonNames()
+            mainRepository.getPokemonNames(offset)
                 .mapToFeedState()
                 .collect {
                     _feedState.value = it
@@ -38,14 +39,7 @@ class MainViewModel @Inject constructor(
 
     fun pageLoadMore() {
         nextUrl?.let {
-            viewModelScope.launch {
-                mainRepository.getPokemonNamesMore(it)
-                    .mapToFeedState()
-                    .collect {
-                        _feedState.value = it
-                    }
-
-            }
+            getNextPagePokemonList()
         }
     }
 
@@ -55,6 +49,7 @@ class MainViewModel @Inject constructor(
 
     private fun Flow<NetworkPokemonListResponse>.mapToFeedState(): Flow<PokemonNameUiState> =
         map { pokemonData ->
+            offset += pokemonData.results.count()
             nextUrl = pokemonData.next
 
             PokemonNameUiState.Success(
