@@ -43,10 +43,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun onClickItem() {
-
-    }
-
     private fun Flow<NetworkPokemonListResponse>.mapToFeedState(): Flow<PokemonNameUiState> =
         map { pokemonData ->
             offset += pokemonData.results.count()
