@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokedex.core.data.model.PokemonDetailInfo
+import com.example.pokedex.core.data.model.PokemonTypes.Companion.toPokemonType
 import com.example.pokedex.core.data.repository.DetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,7 +27,7 @@ class DetailViewModel @Inject constructor(
                     height = "${(res.height / 10.0)}m",
                     weight = "${(res.weight / 10.0)}kg",
                     stats = res.stats.map { it.stat.name },
-                    types = res.types.map { it.type.name },
+                    types = res.types.map { it.type.name.toPokemonType() },
                     abilities = res.abilities.map { it.ability.name }
                 )
             )
