@@ -14,7 +14,7 @@ class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     detailRepository: DetailRepository,
 ) : ViewModel() {
-    val detailInfo: StateFlow<PokemonInfoUiState> = detailRepository.getPokemonDetailInfo(savedStateHandle.get<Int>("id") ?: 0)
+    val detailInfoState: StateFlow<PokemonInfoUiState> = detailRepository.getPokemonDetailInfo(savedStateHandle.get<Int>("id") ?: 0)
         .map { res ->
             PokemonInfoUiState.Success(
                 info = PokemonDetailInfo(

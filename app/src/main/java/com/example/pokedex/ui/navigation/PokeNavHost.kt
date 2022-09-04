@@ -30,7 +30,7 @@ fun PokeNavHost(
             route = "detail/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { backStackEntry ->
-            DetailScreen(backStackEntry.arguments?.getInt("id"))
+            DetailScreen()
 
         }
     }
