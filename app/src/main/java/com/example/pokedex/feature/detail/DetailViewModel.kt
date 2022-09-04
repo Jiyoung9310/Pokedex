@@ -3,6 +3,7 @@ package com.example.pokedex.feature.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pokedex.core.data.model.PokemonAbility
 import com.example.pokedex.core.data.model.PokemonDetailInfo
 import com.example.pokedex.core.data.model.PokemonTypes.Companion.toPokemonType
 import com.example.pokedex.core.data.repository.DetailRepository
@@ -28,7 +29,12 @@ class DetailViewModel @Inject constructor(
                     weight = "${((res.weight ?: 0) / 10.0)}kg",
                     stats = res.stats?.map { it.stat.name } ?: emptyList(),
                     types = res.types?.map { it.type.name.toPokemonType() } ?: emptyList(),
-                    abilities = res.abilities?.map { it.ability.name } ?: emptyList()
+                    abilities = res.abilities?.map {
+                        PokemonAbility(
+                            name = it.ability.name,
+                            isHidden = it.is_hidden
+                        )
+                    } ?: emptyList()
                 )
             )
         }.stateIn(

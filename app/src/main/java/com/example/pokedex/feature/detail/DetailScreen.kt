@@ -159,8 +159,7 @@ fun DetailInfo(
             Column(
                 modifier = Modifier
                     .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(20.dp),
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -173,9 +172,9 @@ fun DetailInfo(
                 LazyRow {
                     items(info.abilities) { item ->
                         Text(
-                            text = item,
+                            text = item.name,
                             style = TextStyle(
-                                color = Color.White,
+                                color = if(item.isHidden) Color.LightGray else Color.White,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold
                             ),

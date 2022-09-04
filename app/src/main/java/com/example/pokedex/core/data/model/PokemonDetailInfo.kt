@@ -9,10 +9,15 @@ data class PokemonDetailInfo (
     val weight: String,
     val types: List<PokemonTypes>,
     val stats: List<String>,
-    val abilities: List<String>,
+    val abilities: List<PokemonAbility>,
 )  {
     val imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png"
 }
+
+data class PokemonAbility(
+    val name: String,
+    val isHidden: Boolean,
+)
 
 enum class PokemonTypes(val color: Color) {
     normal(Color(127, 135, 142)),
