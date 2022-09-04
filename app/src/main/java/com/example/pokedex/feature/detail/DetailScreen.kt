@@ -4,20 +4,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.example.pokedex.R
+import androidx.palette.graphics.Palette
 import com.example.pokedex.feature.main.FeedLoading
+import com.skydoves.landscapist.coil.CoilImage
+import com.skydoves.landscapist.palette.BitmapPalette
 
 @Composable
 fun DetailScreen(
@@ -43,32 +40,33 @@ fun DetailScreen(
 
 @Composable
 fun DetailInfo(
-    infoUiState: PokemonInfoUiState.Success
+    infoUiState: PokemonInfoUiState.Success,
 ) {
     val info = infoUiState.info
-
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
+    var palette by remember { mutableStateOf<Palette?>(null) }
+    Surface(
+        color = Color(palette?.mutedSwatch?.rgb ?: 1)
     ) {
-        AsyncImage(
-            modifier = Modifier
-                .height(150.dp)
-                .width(150.dp),
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(info.imageUrl)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            placeholder = painterResource(R.drawable.pokemon_monster_ball),
-        )
-        Text(text = "id : ${info.id}")
-        Text(text = "name : ${info.name}")
-        Text(text = "weight : ${info.weight}")
-        Text(text = "height : ${info.height}")
-        Text(text = "types : ${info.types}")
-        Text(text = "stats: ${info.stats}")
-        Text(text = "abilities : ${info.abilities}")
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            CoilImage(
+                modifier = Modifier
+                    .height(150.dp)
+                    .width(150.dp),
+                imageModel = info.imageUrl,
+                bitmapPalette = BitmapPalette {
+                    palette = it
+                },
+            )
+            Text(text = "id : ${info.id}", style = TextStyle(color = Color(palette?.mutedSwatch?.titleTextColor ?: 0)))
+            Text(text = "name : ${info.name}")
+            Text(text = "weight : ${info.weight}")
+            Text(text = "height : ${info.height}")
+            Text(text = "types : ${info.types}")
+            Text(text = "stats: ${info.stats}")
+            Text(text = "abilities : ${info.abilities}")
+        }
     }
 }
