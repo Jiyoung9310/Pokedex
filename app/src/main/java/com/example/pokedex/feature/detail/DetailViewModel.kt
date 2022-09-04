@@ -24,11 +24,11 @@ class DetailViewModel @Inject constructor(
                 info = PokemonDetailInfo(
                     id = res.id,
                     name = res.name,
-                    height = "${(res.height / 10.0)}m",
-                    weight = "${(res.weight / 10.0)}kg",
-                    stats = res.stats.map { it.stat.name },
-                    types = res.types.map { it.type.name.toPokemonType() },
-                    abilities = res.abilities.map { it.ability.name }
+                    height = "${((res.height ?: 0) / 10.0)}m",
+                    weight = "${((res.weight ?: 0) / 10.0)}kg",
+                    stats = res.stats?.map { it.stat.name } ?: emptyList(),
+                    types = res.types?.map { it.type.name.toPokemonType() } ?: emptyList(),
+                    abilities = res.abilities?.map { it.ability.name } ?: emptyList()
                 )
             )
         }.stateIn(
