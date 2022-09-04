@@ -1,5 +1,6 @@
 package com.example.pokedex.feature.main
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.pokedex.R
@@ -27,7 +29,10 @@ import com.example.pokedex.ui.theme.Pink80
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
-fun MainScreen(viewModel: MainViewModel) {
+fun MainScreen(
+    viewModel: MainViewModel = hiltViewModel(),
+    navigateToDetail : (Int) -> Unit,
+) {
 
     val feedState by viewModel.feedState.collectAsState()
 
@@ -42,7 +47,8 @@ fun MainScreen(viewModel: MainViewModel) {
             is PokemonNameUiState.Success -> {
                 PokemonFeed(
                     (feedState as PokemonNameUiState.Success),
-                    viewModel::pageLoadMore
+                    viewModel::pageLoadMore,
+                    navigateToDetail
                 )
             }
         }
@@ -62,6 +68,7 @@ fun FeedLoading(
 fun PokemonFeed(
     feedState: PokemonNameUiState.Success,
     loadMore : () -> Unit,
+    onClickItem : (Int) -> Unit,
 ) {
 
     val listState = rememberLazyListState()
@@ -71,7 +78,8 @@ fun PokemonFeed(
             Card (
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 15.dp, start = 15.dp, end = 15.dp),
+                    .padding(top = 15.dp, start = 15.dp, end = 15.dp)
+                    .clickable { onClickItem(item.id) },
                 shape = RoundedCornerShape(16.dp),
                 backgroundColor = Pink80
             )
@@ -86,7 +94,9 @@ fun PokemonFeed(
                         )
                     )
                     AsyncImage(
-                        modifier = Modifier.height(150.dp).width(150.dp),
+                        modifier = Modifier
+                            .height(150.dp)
+                            .width(150.dp),
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(item.imageUrl)
                             .crossfade(true)
