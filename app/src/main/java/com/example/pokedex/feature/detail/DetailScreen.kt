@@ -156,6 +156,35 @@ fun DetailInfo(
 
             }
 
+            Column(
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "abilities",
+                    style = TextStyle(
+                        color = Color(palette?.mutedSwatch?.titleTextColor ?: 0),
+                        fontSize = 20.sp,
+                    )
+                )
+                LazyRow {
+                    items(info.abilities) { item ->
+                        Text(
+                            text = item,
+                            style = TextStyle(
+                                color = Color.White,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                        )
+                    }
+                }
+            }
+
             Text(text = "id : ${info.id}", style = TextStyle(color = Color(palette?.mutedSwatch?.titleTextColor ?: 0)))
             Text(text = "name : ${info.name}")
             Text(text = "weight : ${info.weight}")
