@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.pokedex.feature.main.MainScreen
 import com.example.pokedex.feature.main.MainViewModel
+import com.example.pokedex.ui.PokemonApp
 import com.example.pokedex.ui.theme.PokedexTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PokedexTheme {
-                MainScreen(mainViewModel)
+                PokemonApp()
             }
         }
     }
