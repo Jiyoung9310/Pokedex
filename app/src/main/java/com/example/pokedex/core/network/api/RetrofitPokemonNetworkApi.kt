@@ -1,7 +1,9 @@
 package com.example.pokedex.core.network.api
 
+import com.example.pokedex.core.network.model.NetworkPokemonDetailResponse
 import com.example.pokedex.core.network.model.NetworkPokemonListResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
@@ -15,4 +17,9 @@ interface RetrofitPokemonNetworkApi {
 
     @GET
     suspend fun getPokemonListMore(@Url nextUrl: String): NetworkPokemonListResponse
+
+    @GET("pokemon/{id}")
+    suspend fun getPokemonInfo(
+        @Path("id") id: Int,
+    ): NetworkPokemonDetailResponse
 }

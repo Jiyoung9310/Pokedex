@@ -4,10 +4,10 @@ data class NetworkPokemonListResponse(
     val count : Int,
     val next : String,
     val previous : String?,
-    val results : List<NetworkPokemonName>
+    val results : List<NetworkPokemonCommonName>
 )
 
-data class NetworkPokemonName(
+data class NetworkPokemonCommonName(
     val name : String,
     val url : String,
 )
