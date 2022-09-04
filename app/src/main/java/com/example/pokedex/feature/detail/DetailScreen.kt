@@ -9,7 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.palette.graphics.Palette
 import com.example.pokedex.feature.main.FeedLoading
@@ -48,18 +50,82 @@ fun DetailInfo(
         color = Color(palette?.mutedSwatch?.rgb ?: 1)
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CoilImage(
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp),
+                    .height(200.dp)
+                    .width(200.dp),
                 imageModel = info.imageUrl,
                 bitmapPalette = BitmapPalette {
                     palette = it
                 },
             )
+
+            Text(
+                text = "No${info.id}. ${info.name}",
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+
+            Row(
+                modifier = Modifier
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(
+                    modifier = Modifier.padding(bottom = 5.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "height",
+                        style = TextStyle(
+                            color = Color(palette?.mutedSwatch?.titleTextColor ?: 0),
+                            fontSize = 20.sp,
+                        )
+                    )
+                    Text(
+                        text = info.height,
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+
+                Column(
+                    modifier = Modifier.padding(bottom = 5.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "weight",
+                        style = TextStyle(
+                            color = Color(palette?.mutedSwatch?.titleTextColor ?: 0),
+                            fontSize = 20.sp,
+                        )
+                    )
+                    Text(
+                        text = info.weight,
+                        style = TextStyle(
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+
+            }
+
             Text(text = "id : ${info.id}", style = TextStyle(color = Color(palette?.mutedSwatch?.titleTextColor ?: 0)))
             Text(text = "name : ${info.name}")
             Text(text = "weight : ${info.weight}")

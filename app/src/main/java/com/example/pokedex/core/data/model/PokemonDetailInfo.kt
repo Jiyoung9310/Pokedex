@@ -3,8 +3,8 @@ package com.example.pokedex.core.data.model
 data class PokemonDetailInfo (
     val id: Int,
     val name: String,
-    val height: Int,
-    val weight: Int,
+    val height: String,
+    val weight: String,
     val types: List<String>,
     val stats: List<String>,
     val abilities: List<String>,
