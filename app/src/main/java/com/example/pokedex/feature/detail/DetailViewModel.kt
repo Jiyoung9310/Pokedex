@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokedex.core.data.model.PokemonAbility
 import com.example.pokedex.core.data.model.PokemonDetailInfo
+import com.example.pokedex.core.data.model.PokemonStat
 import com.example.pokedex.core.data.model.PokemonTypes.Companion.toPokemonType
 import com.example.pokedex.core.data.repository.DetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +28,12 @@ class DetailViewModel @Inject constructor(
                     name = res.name,
                     height = "${((res.height ?: 0) / 10.0)}m",
                     weight = "${((res.weight ?: 0) / 10.0)}kg",
-                    stats = res.stats?.map { it.stat.name } ?: emptyList(),
+                    stats = res.stats?.map {
+                        PokemonStat(
+                            name = it.stat.name,
+                            baseStat = it.base_stat
+                        )
+                    } ?: emptyList(),
                     types = res.types?.map { it.type.name.toPokemonType() } ?: emptyList(),
                     abilities = res.abilities?.map {
                         PokemonAbility(
